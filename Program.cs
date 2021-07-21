@@ -147,7 +147,7 @@ namespace UCS
             int start = Int32.Parse(_start);
             int end = Int32.Parse(_end);
 
-            Console.WriteLine($"Calculating uniform serach from (start, end) = ({_start},{_end})...");
+            Console.WriteLine($"Calculating uniform search from (start, end) = ({_start},{_end})...");
         
             // get the answer
             int answer = uniform_cost_search(start, end);
