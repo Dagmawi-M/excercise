@@ -57,5 +57,15 @@ namespace UCS
 
             return cost;
         }
+
+        public static List<int> AddGoal(int endNode){
+            // goal state
+        List<int> goal=new List<int>();
+    
+        // set the goal
+        // there can be multiple goal states
+        goal.Add(endNode);
+        return goal;
+        }
     }
 }
