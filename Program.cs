@@ -39,6 +39,9 @@ namespace UCS
         
             // count
             int count = 0;
+            int ifCount = 0;
+            int whileCount =0;
+            int forCount = 0;
         
             // while the queue is not empty
             while (queue.Count > 0) {
@@ -53,6 +56,8 @@ namespace UCS
         
                 // check if the element is part of the goal list
                 if (goal.Contains(p.Item2)) {
+                    Console.WriteLine($"ifCount = {ifCount}");
+                    ifCount++;
         
                     // get the position
                     int index = goal.IndexOf(p.Item2);
@@ -72,10 +77,14 @@ namespace UCS
                     if (count == goal.Count)
                         return answer[0];
                 }
+                Console.WriteLine($"whileCount = {whileCount}");
+                whileCount++;
         
                 // check for the non visited nodes which are adjacent to present node
                 if (!visited.ContainsKey(p.Item2))
                     for (int i = 0; i < GetAdjacentNodes(p.Item2).Count; i++) {
+                        Console.WriteLine($"forCount = {forCount}");
+                        forCount++;
         
                         // value is multiplied by -1 so that least priority is at the top
                         var theCost = cost[new Tuple<int,int>(p.Item2,  GetEdge(p.Item2,i))];
