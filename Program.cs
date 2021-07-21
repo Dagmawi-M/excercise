@@ -7,6 +7,8 @@ namespace UCS
 {
     class GFG
     {
+        //enable/disbale Console.WriteLine
+        static bool DEBUG = false;
     
         // graph
         static List<List<int>> graph=new List<List<int>>();
@@ -45,21 +47,21 @@ namespace UCS
         
             // while the queue is not empty
             while (queue.Count > 0) {
-        
+                if(queue.Count > 0){
+                    log($"Queue at whilecount{whileCount} = {queue[0].Item1},{queue[0].Item2}");
+                }
                 // get the top element of the priority queue
                 Tuple<int, int> q = queue[0];
                 Tuple<int, int> p = new Tuple<int,int>(-q.Item1,q.Item2); // item1 = cost ? , item2 = goal
         
                 // pop the element
                 queue.RemoveAt(0);
-                if(queue.Count > 0){
-                Console.WriteLine($"Queue at whilecount{whileCount} = {queue[0].Item1},{queue[0].Item2}");
-                }
+               
         
         
                 // check if the element is part of the goal list
                 if (goal.Contains(p.Item2)) {
-                    Console.WriteLine($"ifCount = {ifCount}");
+                    log($"ifCount = {ifCount}");
                     ifCount++;
         
                     // get the position
@@ -80,13 +82,13 @@ namespace UCS
                     if (count == goal.Count)
                         return answer[0];
                 }
-                Console.WriteLine($"whileCount = {whileCount}");
+                log($"whileCount = {whileCount}");
                 whileCount++;
         
                 // check for the non visited nodes which are adjacent to present node
                 if (!visited.ContainsKey(p.Item2))
                     for (int i = 0; i < GetAdjacentNodes(p.Item2).Count; i++) {
-                        Console.WriteLine($"forCount = {forCount}");
+                        log($"forCount = {forCount}");
                         forCount++;
         
                         // value is multiplied by -1 so that least priority is at the top
@@ -102,7 +104,7 @@ namespace UCS
                             int c=0;
                             foreach (var item in queue)
                             {
-                                 Console.WriteLine($"forCount= {forCount} | Queue[{c}] = ({item.Item1},{item.Item2})");
+                                 log($"forCount= {forCount} | Queue[{c}] = ({item.Item1},{item.Item2})");
                                  c++;
                             }
                         }
@@ -119,7 +121,12 @@ namespace UCS
         }
 
         static List<int> GetAdjacentNodes(int _node){
-        return  graph[_node];
+            return  graph[_node];
+        }
+        
+        static void log(string _input){
+            if(DEBUG)
+                Console.WriteLine(_input);
         }
 
         // main function
@@ -127,8 +134,16 @@ namespace UCS
         {        
             graph = UniformSerachGraph.CreateGraph();
             cost = UniformSerachGraph.CreateCost();
-            int start = 0;
-            int end = 6;
+
+            Console.Write("Enter start node = ");
+            string _start = Console.ReadLine();
+            Console.Write("Enter end node = ");
+            string _end = Console.ReadLine();            
+
+            int start = Int32.Parse(_start);
+            int end = Int32.Parse(_end);
+
+            Console.WriteLine($"Calculating uniform serach from (start, end) = ({_start},{_end})...");
         
             // get the answer
             int answer = uniform_cost_search(start, end);
