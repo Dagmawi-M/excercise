@@ -48,10 +48,13 @@ namespace UCS
         
                 // get the top element of the priority queue
                 Tuple<int, int> q = queue[0];
-                Tuple<int, int> p = new Tuple<int,int>(-q.Item1,q.Item2);
+                Tuple<int, int> p = new Tuple<int,int>(-q.Item1,q.Item2); // item1 = cost ? , item2 = goal
         
                 // pop the element
                 queue.RemoveAt(0);
+                if(queue.Count > 0){
+                Console.WriteLine($"Queue at whilecount{whileCount} = {queue[0].Item1},{queue[0].Item2}");
+                }
         
         
                 // check if the element is part of the goal list
@@ -94,6 +97,15 @@ namespace UCS
                             (p.Item1 + ( theMatchCondition ? theCost : 0))*-1,
                             GetEdge(p.Item2,i))                
                         );
+
+                        if(queue.Count > 0){
+                            int c=0;
+                            foreach (var item in queue)
+                            {
+                                 Console.WriteLine($"forCount= {forCount} | Queue[{c}] = ({item.Item1},{item.Item2})");
+                                 c++;
+                            }
+                        }
                     }
         
                 // mark as visited
