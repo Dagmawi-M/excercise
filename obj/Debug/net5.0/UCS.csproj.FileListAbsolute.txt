@@ -1,0 +1,16 @@
+/home/spin/projects/excercise/UCS/bin/Debug/net5.0/UCS
+/home/spin/projects/excercise/UCS/bin/Debug/net5.0/UCS.deps.json
+/home/spin/projects/excercise/UCS/bin/Debug/net5.0/UCS.runtimeconfig.json
+/home/spin/projects/excercise/UCS/bin/Debug/net5.0/UCS.runtimeconfig.dev.json
+/home/spin/projects/excercise/UCS/bin/Debug/net5.0/UCS.dll
+/home/spin/projects/excercise/UCS/bin/Debug/net5.0/ref/UCS.dll
+/home/spin/projects/excercise/UCS/bin/Debug/net5.0/UCS.pdb
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.csproj.AssemblyReference.cache
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.GeneratedMSBuildEditorConfig.editorconfig
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.AssemblyInfoInputs.cache
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.AssemblyInfo.cs
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.csproj.CoreCompileInputs.cache
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.dll
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/ref/UCS.dll
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.pdb
+/home/spin/projects/excercise/UCS/obj/Debug/net5.0/UCS.genruntimeconfig.cache
