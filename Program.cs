@@ -9,7 +9,7 @@ namespace UCS
     class GFG
     {
         //enable/disbale Console.WriteLine
-        static bool DEBUG = true;
+        static bool DEBUG = false;
         
         // graph
         static List<List<int>> graph=new List<List<int>>();
@@ -136,18 +136,39 @@ namespace UCS
         // main function
         public static void Main(params string []args)
         {        
-            graph = UniformSerachGraph.CreateGraph();
-            cost = UniformSerachGraph.CreateCost();
+            var _nodes = UniformSerachGraph.GetNodes("nodes_1.csv");
+            Console.WriteLine($"file nodes: {string.Join("|",_nodes.ToList())}");
+            //----------------------
 
-            Console.Write("Enter start node = ");
+            graph = UniformSerachGraph.GetGraph("graph_1.csv", 6);
+            // int gct = 0;
+            // foreach (var gitem in graph)
+            // {                
+            //     Console.WriteLine($"file graphs: Node Index =[{gct}] {string.Join("|",gitem.ToList())}");
+            //     gct++;
+            // }
+            
+            //------------
+            cost  =UniformSerachGraph.GetCost("cost_1.csv");
+            // int cct =0;
+            // foreach (var citem in cost.ToList())
+            // {
+            //    // Console.WriteLine($"file Cost: (Node1, Node2)= ({citem.Key.Item1},{citem.Key.Item2}) --- Cost = {citem.Value} ");
+            //     cct++;
+            // }
+            //------------
+            // graph = UniformSerachGraph.CreateGraph();
+            // cost = UniformSerachGraph.CreateCost();
+
+            Console.Write("Enter name of START node = ");
             string _start = Console.ReadLine();
-            Console.Write("Enter end node = ");
+            Console.Write("Enter name of ENd node = ");
             string _end = Console.ReadLine();            
 
-            int start = Int32.Parse(_start);
-            int end = Int32.Parse(_end);
+            int start = (_nodes[_start]);
+            int end = _nodes[_end];
 
-            Console.WriteLine($"Calculating uniform search from (start, end) = ({_start},{_end})...");
+            Console.WriteLine($"Calculating uniform search from (start, end) = ({start},{end})...");
         
             // get the answer
             int answer = uniform_cost_search(start, end);

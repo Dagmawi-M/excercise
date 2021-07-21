@@ -2,16 +2,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
- 
+using System.IO;
+using System.Linq;
+
 namespace UCS
 {
     public static class UniformSerachGraph 
-    {
+    {      
+        //csv fiesl directory 
+        static string CSV_DIR = Path.Combine(Directory.GetCurrentDirectory(),"Data");
         // graph
         static List<List<int>> graph=new List<List<int>>();
  
         // map to store cost of edges
         static Dictionary<Tuple<int,int>,int> cost= new Dictionary<Tuple<int,int>,int>();
+
+        public static Dictionary<string, int> GetNodes(string fileNameWithExtension)
+        {
+            Dictionary<string, int> dict = new Dictionary<string, int> ();
+            string _filePath = Path.Combine(CSV_DIR, $"{fileNameWithExtension}");
+            var lines = File.ReadLines(_filePath).Select(a => a.Split(',')).ToList();
+            lines.RemoveAt(0);
+            lines.ForEach(x => dict.Add(x[1], int.Parse(x[0])));
+
+            return dict;
+        }
+
+        public static List<List<int>> GetGraph(string fileNameWithExtension, int nodeCount){
+             // create the graph
+            graph=new List<List<int>>();
+            var lines = File.ReadLines(Path.Combine(CSV_DIR, $"{fileNameWithExtension}"))
+                            .Select(a => a.Split(','))
+                            .ToList();
+            lines.RemoveAt(0);
+
+            for(int i=0;i< nodeCount+1;i++)
+            {
+                graph.Add(new List<int>());
+            }
+
+            lines.ForEach(line => graph[int.Parse(line[0])].Add(int.Parse(line[1])));
+
+            return graph;
+        }
+
+        public static Dictionary<Tuple<int,int>,int> GetCost(string fileNameWithExtension) {
+            Dictionary<Tuple<int,int>,int> cost = 
+                new Dictionary<Tuple<int, int>, int> ();
+
+            var lines = File.ReadLines(Path.Combine(CSV_DIR, $"{fileNameWithExtension}"))
+                            .Select(a => a.Split(','))
+                            .ToList();
+            lines.RemoveAt(0);
+
+            lines.ForEach(line => {
+                cost[new Tuple<int,int>(int.Parse(line[0]), int.Parse(line[1]))] = int.Parse(line[2]);
+            });
+
+            return cost;
+        }
+
 
         public static List<List<int>> CreateGraph()
         {
