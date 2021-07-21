@@ -2,14 +2,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UCS
 {
     class GFG
     {
         //enable/disbale Console.WriteLine
-        static bool DEBUG = false;
-    
+        static bool DEBUG = true;
+        
         // graph
         static List<List<int>> graph=new List<List<int>>();
         
@@ -88,7 +89,7 @@ namespace UCS
                 // check for the non visited nodes which are adjacent to present node
                 if (!visited.ContainsKey(p.Item2))
                     for (int i = 0; i < GetAdjacentNodes(p.Item2).Count; i++) {
-                        log($"forCount = {forCount}");
+                        //log($"forCount = {forCount}");
                         forCount++;
         
                         // value is multiplied by -1 so that least priority is at the top
@@ -104,14 +105,17 @@ namespace UCS
                             int c=0;
                             foreach (var item in queue)
                             {
-                                 log($"forCount= {forCount} | Queue[{c}] = ({item.Item1},{item.Item2})");
-                                 c++;
+                                log($"forCount= {forCount} | Queue[{c}] = ({item.Item1},{item.Item2})");
+                                c++;
                             }
                         }
                     }
         
                 // mark as visited
                 visited[p.Item2] = 1;
+                var nodes = visited.Where(i => i.Value == 1).Select(x => x.Key).ToList();
+                string csl =   string.Join(",",nodes);
+                log($"visited nodes: {csl}");
             }
         
             return answer[0];
