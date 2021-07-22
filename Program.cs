@@ -22,7 +22,7 @@ namespace UCS
             Dictionary<string, bool> visited_nodes = new Dictionary<string, bool> ();
 
             //Define prvous nodes Dictionary
-            Dictionary<string,List<Tuple<int,int>>> prevousNodesAndCostsDictionary = new Dictionary<string,List<Tuple<int,int>>> ();
+            Dictionary<string,List<Tuple<string,int>>> prevousNodesAndCostsDictionary = new Dictionary<string,List<Tuple<string,int>>> ();
 
             //Intialised priority queue with start values
             //The tuple contains = (total_cost, current_node, prev_node, link_cost)
@@ -59,9 +59,9 @@ namespace UCS
                 {
                     visited_nodes[current_node] = true;
                     
-                    prevousNodesAndCostsDictionary[current_node] = new List<Tuple<int, int>> ();
+                    prevousNodesAndCostsDictionary[current_node] = new List<Tuple<string, int>> ();
                     
-                    var tempTuple = new Tuple<int, int> (int.Parse(prev_node),link_cost);
+                    var tempTuple = new Tuple<string, int> (prev_node,link_cost);
 
                     prevousNodesAndCostsDictionary[current_node].Add(tempTuple);
 
@@ -70,9 +70,10 @@ namespace UCS
                         while (current_node != source)
                         {                            
                             List<string> temp = new List<string>(){};
-                            foreach (var i in prevousNodesAndCostsDictionary[current_node])
+                            foreach (var prevNodeAndCostList in prevousNodesAndCostsDictionary[current_node])
                             {
-                                temp.Add(i.Item1.ToString());
+                                //prevNodeAndCostList.Item1 is a node
+                                temp.Add(prevNodeAndCostList.Item1.ToString());
                             }
                             final.AddRange(temp);
                             current_node = prevousNodesAndCostsDictionary[current_node][0].Item1.ToString();
