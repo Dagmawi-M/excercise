@@ -15,8 +15,7 @@ namespace UCS
     {
         static bool DEBUG = true;   
         static Dictionary <string,int> _nodes = new Dictionary<string,int> ();
-        static  List<Tuple<string,string,int>> graphandweight = new List<Tuple<string,string,int>> ();
-               
+        static  List<Tuple<string,string,int>> graphandweight = new List<Tuple<string,string,int>> ();               
         static (int,List<string>) uniformCost(string source, string goal) {
             //Define priority queue
             List<Tuple<int,string,string,int>> nodes_q = new List<Tuple<int, string, string, int> >();
@@ -119,53 +118,24 @@ namespace UCS
         // main function
         public static void Main(params string []args)
         {        
+            //Read node names from file
             _nodes = UniformSerachGraph.GetNodes("nodes_1.csv");
-            Console.WriteLine($"file nodes: {string.Join("|",_nodes.ToList())}");
-            //----------------------
+            Console.WriteLine($"file nodes: {string.Join("--",_nodes.ToList())}");          
 
-            //graph = UniformSerachGraph.GetGraph("graph_1.csv", 6);
-            // int gct = 0;
-            // foreach (var gitem in graph)
-            // {                
-            //     Console.WriteLine($"file graphs: Node Index =[{gct}] {string.Join("|",gitem.ToList())}");
-            //     gct++;
-            // }
-            
-            //------------
-            //cost  = UniformSerachGraph.GetCost("cost_1.csv");
-
+            //Read graph and cost from file
             graphandweight= UniformSerachGraph.GetGraphAndWeight("cost_1.csv");
 
-            // int cct =0;
-            // foreach (var citem in cost.ToList())
-            // {
-            //    // Console.WriteLine($"file Cost: (Node1, Node2)= ({citem.Key.Item1},{citem.Key.Item2}) --- Cost = {citem.Value} ");
-            //     cct++;
-            // }
-            //------------
-            // graph = UniformSerachGraph.CreateGraph();
-            // cost = UniformSerachGraph.CreateCost();
-
+            //Console INput values
             Console.Write("Enter name of START node = ");
             string _start = Console.ReadLine();
-            Console.Write("Enter name of ENd node = ");
+
+            Console.Write("Enter name of END node = ");
             string _end = Console.ReadLine();            
 
             int start = (_nodes[_start]);
             int end = _nodes[_end];
 
-            Console.WriteLine($"Calculating uniform search from (start, end) = ({start},{end})...");
-        
-            // get the answer
-            //int answer = uniform_cost_search(start, end);          
-        
-            // print the answer
-            //Console.Write($"Minimum cost from {start} to {end} is = {answer}");
-
-            //(int path_cost, List<int> paths)   = ucs(start, end, _nodes.Count());
-            //Console.Write($"ucs:: Minimum cost from {start} to {end} is = {path_cost}");
-            //Console.WriteLine($"ucs:: path is :{string.Join("-->",paths)}");
-
+            Console.WriteLine($"Calculating uniform search from (start, end) = ({start},{end})...");        
 
             (int totalCost, List<string> pathTaken) =  uniformCost(start.ToString(), end.ToString());
             Console.WriteLine($"uniformCost:: totalCost :{totalCost}");
