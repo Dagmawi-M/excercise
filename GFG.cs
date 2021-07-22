@@ -63,6 +63,23 @@ namespace UCS
         }
 
 
+        public static List<Tuple<string,string,int>> GetGraphAndWeight(string fileNameWithExtension) {
+            List<Tuple<string,string,int>>gnw = 
+                new List<Tuple<string,string,int>> ();
+
+            var lines = File.ReadLines(Path.Combine(CSV_DIR, $"{fileNameWithExtension}"))
+                            .Select(a => a.Split(','))
+                            .ToList();
+            lines.RemoveAt(0);
+
+            lines.ForEach(line => {                
+                gnw.Add(new Tuple<string,string,int>(line[0],line[1],int.Parse(line[2]) ));
+            });
+
+            return gnw;
+        }
+
+
         public static List<List<int>> CreateGraph()
         {
             // create the graph
