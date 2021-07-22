@@ -22,11 +22,11 @@ namespace UCS
             Dictionary<string, bool> visited_nodes = new Dictionary<string, bool> ();
 
             //Define prvous nodes Dictionary
-            Dictionary<string,List<Tuple<int,int>>> prev_nodes = new Dictionary<string,List<Tuple<int,int>>> ();
+            Dictionary<string,List<Tuple<int,int>>> prevousNodesAndCostsDictionary = new Dictionary<string,List<Tuple<int,int>>> ();
 
             //Intialised priority queue with start values
             //The tuple contains = (total_cost, current_node, prev_node, link_cost)
-            nodes_q.Add(new Tuple<int, string, string, int> (0,source.ToString(), "-1",0));
+            nodes_q.Add(new Tuple<int, string, string, int> (0,source, "-1",0));
             
             //Initialise all visited to false
             foreach (var node in _nodes)
@@ -35,7 +35,7 @@ namespace UCS
                 visited_nodes[node.Value.ToString()] = false;
                 
                 //Set all nodes' values of previous node to null
-                prev_nodes[node.Key] = null;
+                prevousNodesAndCostsDictionary[node.Key] = null;
             }
 
             while (nodes_q.Count() != 0)
@@ -50,8 +50,8 @@ namespace UCS
                 
                 //Set values from tuple
                 int total_cost = current.Item1;
-                string current_node = (current.Item2);
-                string prev_node  =  (current.Item3);
+                string current_node = current.Item2;
+                string prev_node  =  current.Item3;
                 int link_cost = current.Item4;
 
                 //if the current node has not been visited yet, do
@@ -59,24 +59,23 @@ namespace UCS
                 {
                     visited_nodes[current_node] = true;
                     
-                    prev_nodes[current_node] = new List<Tuple<int, int>> ();
+                    prevousNodesAndCostsDictionary[current_node] = new List<Tuple<int, int>> ();
                     
                     var tempTuple = new Tuple<int, int> (int.Parse(prev_node),link_cost);
 
-                    prev_nodes[current_node].Add(tempTuple);
+                    prevousNodesAndCostsDictionary[current_node].Add(tempTuple);
 
                     if(current_node == goal){
                         List<string> final = new List<string> ();
                         while (current_node != source)
-                        {
-                            //List<string> temp = new List<string>(){current_node};
+                        {                            
                             List<string> temp = new List<string>(){};
-                            foreach (var i in prev_nodes[current_node])
+                            foreach (var i in prevousNodesAndCostsDictionary[current_node])
                             {
                                 temp.Add(i.Item1.ToString());
                             }
                             final.AddRange(temp);
-                            current_node = prev_nodes[current_node][0].Item1.ToString();
+                            current_node = prevousNodesAndCostsDictionary[current_node][0].Item1.ToString();
 
                         }                        
                         final.Reverse();
@@ -84,7 +83,17 @@ namespace UCS
                         return (total_cost, final);
                     }
 
-                    var currentNodeNeighbors = graphandweight.Where(x => x.Item1 == current_node).ToList();
+                    List<Tuple<string,string,int>> currentNodeNeighbors = new List<Tuple<string, string, int>> ();
+
+                    foreach (var graphEntry in graphandweight)
+                    {
+                        if(graphEntry.Item1 == current_node){
+                            currentNodeNeighbors.Add(graphEntry);
+                        }                        
+                    }
+
+
+
                     foreach (var tuple in currentNodeNeighbors)
                     {
                         var neighbor = tuple.Item2;
