@@ -2,17 +2,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace UCS
 {
-    /*
-    See https://www.geeksforgeeks.org/uniform-cost-search-dijkstra-for-large-graphs/
-    and also 
-    https://www.baeldung.com/cs/find-path-uniform-cost-search
-    */
+  
     class GFG
     {
+        static string CSV_DIR = Path.Combine(Directory.GetCurrentDirectory(),"Data");
         static bool DEBUG = true;   
         static Dictionary <string,int> _nodes = new Dictionary<string,int> ();
         static  List<Tuple<string,string,int>> graphandweight = new List<Tuple<string,string,int>> ();               
@@ -71,16 +69,18 @@ namespace UCS
                         List<string> final = new List<string> ();
                         while (current_node != source)
                         {
-                            List<string> temp = new List<string>(){current_node};
+                            //List<string> temp = new List<string>(){current_node};
+                            List<string> temp = new List<string>(){};
                             foreach (var i in prev_nodes[current_node])
                             {
                                 temp.Add(i.Item1.ToString());
                             }
                             final.AddRange(temp);
-                            current_node =prev_nodes[current_node][0].Item1.ToString();
+                            current_node = prev_nodes[current_node][0].Item1.ToString();
 
-                        }
+                        }                        
                         final.Reverse();
+                        final.Add(goal);
                         return (total_cost, final);
                     }
 
@@ -115,15 +115,43 @@ namespace UCS
                 Console.WriteLine(_input);
         }
 
+
+        public static List<Tuple<string,string,int>> GetGraphAndWeight(string fileNameWithExtension) {
+            List<Tuple<string,string,int>>gnw = 
+                new List<Tuple<string,string,int>> ();
+
+            var lines = File.ReadLines(Path.Combine(CSV_DIR, $"{fileNameWithExtension}"))
+                            .Select(a => a.Split(','))
+                            .ToList();
+            lines.RemoveAt(0);
+
+            lines.ForEach(line => {                
+                gnw.Add(new Tuple<string,string,int>(line[0],line[1],int.Parse(line[2]) ));
+            });
+
+            return gnw;
+        }
+
+        public static Dictionary<string, int> GetNodes(string fileNameWithExtension)
+        {
+            Dictionary<string, int> dict = new Dictionary<string, int> ();
+            string _filePath = Path.Combine(CSV_DIR, $"{fileNameWithExtension}");
+            var lines = File.ReadLines(_filePath).Select(a => a.Split(',')).ToList();
+            lines.RemoveAt(0);
+            lines.ForEach(x => dict.Add(x[1], int.Parse(x[0])));
+
+            return dict;
+        }
+
         // main function
         public static void Main(params string []args)
         {        
             //Read node names from file
-            _nodes = UniformSerachGraph.GetNodes("nodes_1.csv");
+            _nodes = GetNodes("nodes_1.csv");
             Console.WriteLine($"file nodes: {string.Join("--",_nodes.ToList())}");          
 
             //Read graph and cost from file
-            graphandweight= UniformSerachGraph.GetGraphAndWeight("cost_1.csv");
+            graphandweight= GetGraphAndWeight("cost_1.csv");
 
             //Console INput values
             Console.Write("Enter name of START node = ");
