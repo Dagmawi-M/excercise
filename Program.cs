@@ -8,7 +8,9 @@ namespace UCS
     class GFG
     {
         static string CSV_DIR = Path.Combine(Directory.GetCurrentDirectory(),"Data");
-        static bool DEBUG = true;   
+        static bool DEBUG = true;
+
+        static bool DIAGNOSTICS = true;
         static Dictionary <string,int> _nodes = new Dictionary<string,int> ();        
                    
         static (int,List<string>) uniformCost(List<Tuple<string,string,int>> graph, string source, string goal) {
@@ -24,27 +26,42 @@ namespace UCS
             //Intialised priority queue with start values
             //The tuple contains = (total_cost, current_node, prev_node, link_cost)
             nodes_q.Add(new Tuple<int, string, string, int> (0,source, "None",0));
+            Diagnostics("Initialise", $"nodes_q[0]:(total_cost={nodes_q[0].Item1}, current_node={nodes_q[0].Item2}, prev_node={nodes_q[0].Item3}, link_cost={nodes_q[0].Item4})");
             
             //Initialise all visited to false
             foreach (var node in _nodes)
             {
                 //Initialise all visited to false
-                visited_nodes[node.Key] = false;
-                
+                visited_nodes[node.Key] = false;              
+
                 //Set all nodes' values of previous node to null
-                prevousNodesAndCostsDictionary[node.Key] = null;
+                prevousNodesAndCostsDictionary[node.Key] = null;                
             }
 
+             Diagnostics("Initialise", $"visited_nodes:{string.Join(",",visited_nodes)}");
+             Diagnostics("Initialise", $"prevousNodesAndCostsDictionary:{string.Join(",",prevousNodesAndCostsDictionary)}");
+            int whileloopCount = 0;
             while (nodes_q.Count() != 0)
             {
+                Diagnostics($"While_Loop[#{whileloopCount}]","--------------------------------------");
                 //Get the topOfQueue entry and set it to the top of queue value 
                 Tuple<int,string,string,int> topOfQueue = nodes_q[0];
-
+                Diagnostics($"While_Loop[#{whileloopCount}]", $"topOfQueue =((total_cost={topOfQueue.Item1}, current_node={topOfQueue.Item2}, prev_node={topOfQueue.Item3}, link_cost={topOfQueue.Item4}))");
+               
                 //Set values from tuple
                 int total_cost = topOfQueue.Item1;
                 string current_node = topOfQueue.Item2;
                 string prev_node  =  topOfQueue.Item3;
                 int link_cost = topOfQueue.Item4;
+
+                 Diagnostics($"While_Loop[#{whileloopCount}]", $"visited_nodes:{string.Join(",",visited_nodes)}");
+                prevousNodesAndCostsDictionary.TryGetValue(current_node, out List<Tuple<string,int>> currNodeList);
+                if(currNodeList != null){
+                    foreach (var tuple in currNodeList?.ToList())
+                    {
+                        Diagnostics($"While_Loop[#{whileloopCount}]", $"prevousNodesAndCostsDictionary @ current_node{current_node}:(prev_node, cost) =({tuple.Item1},{tuple.Item2}))");    
+                    }
+                }
 
                 /* Pop the first(top of queue) element from queue
                    This is because the next block is about to process it
@@ -69,7 +86,9 @@ namespace UCS
                     /* If the destination node has been reached, then do
                        The results are returned in this block */
                     if(current_node == goal)
-                    {                        
+                    {
+                        Diagnostics($"While_Loop[#{whileloopCount}]",$"Goal has been reached = {goal}");
+
                         List<string> finalPathList = new List<string> ();
                         while (current_node != source)
                         {                            
@@ -124,9 +143,11 @@ namespace UCS
 
                             //Add to the computed values, prev & current nodes to the queue
                             nodes_q.Add(new Tuple<int, string, string, int> (new_cost, neighbor, current_node, ncost)); 
+                            Diagnostics($"While_Loop[#{whileloopCount}]::foreach:", $"nodes_q[0]:(total_cost={nodes_q[0].Item1}, current_node={nodes_q[0].Item2}, prev_node={nodes_q[0].Item3}, link_cost={nodes_q[0].Item4})");
                         }                        
                     }
                 }
+                whileloopCount++;
             }
 
             return (0, new List<string>());
@@ -134,6 +155,12 @@ namespace UCS
         static void log(string _input){
             if(DEBUG)
                 Console.WriteLine(_input);
+        }
+
+        static void Diagnostics(string position, string input){
+            if(DIAGNOSTICS){
+                Console.WriteLine($"pos: [{position}] :: {input}");
+            }
         }
 
         /// Returns the graph connection and weight values from csv file. 
