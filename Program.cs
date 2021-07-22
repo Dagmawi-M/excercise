@@ -64,6 +64,7 @@ namespace UCS
                     var tempTuple = new Tuple<string, int> (prev_node,link_cost);
 
                     prevousNodesAndCostsDictionary[current_node].Add(tempTuple);
+                    //log($" prevousNodesAndCostsDictionary[current_node] = { string.Join("|",prevousNodesAndCostsDictionary[current_node]) }");
 
                     if(current_node == goal){
                         List<string> final = new List<string> ();
@@ -81,7 +82,16 @@ namespace UCS
                         }                        
                         final.Reverse();
                         final.Add(goal);
-                        return (total_cost, final);
+
+                        //Replace node index values to string names
+                        List<string> pathNodes = new List<string> ();
+                        foreach (var node in final)
+                        {
+                            //Find Dictionary key (string node name)  from string value (its integer index)
+                            var name = _nodes.FirstOrDefault(x => x.Value == (int.Parse(node))).Key;
+                            pathNodes.Add(name);                           
+                        }
+                        return (total_cost, pathNodes);
                     }
 
                     List<Tuple<string,string,int>> currentNodeNeighbors = new List<Tuple<string, string, int>> ();
@@ -92,7 +102,6 @@ namespace UCS
                             currentNodeNeighbors.Add(graphEntry);
                         }                        
                     }
-
 
 
                     foreach (var tuple in currentNodeNeighbors)
@@ -148,7 +157,7 @@ namespace UCS
             string _filePath = Path.Combine(CSV_DIR, $"{fileNameWithExtension}");
             var lines = File.ReadLines(_filePath).Select(a => a.Split(',')).ToList();
             lines.RemoveAt(0);
-            lines.ForEach(x => dict.Add(x[1], int.Parse(x[0])));
+            lines.ForEach(x => dict.Add(x[0], int.Parse(x[1])));
 
             return dict;
         }
