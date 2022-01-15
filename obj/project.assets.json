@@ -8,24 +8,26 @@
     "net5.0": []
   },
   "packageFolders": {
-    "/home/spin/.nuget/packages/": {}
+    "C:\\Users\\Dagmawi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/spin/projects/excercise/UCS/UCS.csproj",
+      "projectUniqueName": "C:\\Users\\Dagmawi\\Documents\\CS(488)_Project_Code(C#)\\CS(488)_Project_Code(C#)\\UCS.csproj",
       "projectName": "UCS",
-      "projectPath": "/home/spin/projects/excercise/UCS/UCS.csproj",
-      "packagesPath": "/home/spin/.nuget/packages/",
-      "outputPath": "/home/spin/projects/excercise/UCS/obj/",
+      "projectPath": "C:\\Users\\Dagmawi\\Documents\\CS(488)_Project_Code(C#)\\CS(488)_Project_Code(C#)\\UCS.csproj",
+      "packagesPath": "C:\\Users\\Dagmawi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Dagmawi\\Documents\\CS(488)_Project_Code(C#)\\CS(488)_Project_Code(C#)\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/spin/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Dagmawi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -58,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.302/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
