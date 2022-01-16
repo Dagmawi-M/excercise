@@ -137,21 +137,6 @@ namespace UCS
         }
 
         /// Returns the graph connection and weight values from csv file. 
-        public static List<Tuple<string,string,int>> GetGraphAndWeight(string fileNameWithExtension) {
-            List<Tuple<string,string,int>>gnw = 
-                new List<Tuple<string,string,int>> ();
-
-            var lines = File.ReadLines(Path.Combine(CSV_DIR, $"{fileNameWithExtension}"))
-                            .Select(a => a.Split(','))
-                            .ToList();
-            lines.RemoveAt(0);
-
-            lines.ForEach(line => {                
-                gnw.Add(new Tuple<string,string,int>(line[0],line[1],int.Parse(line[2]) ));
-            });
-
-            return gnw;
-        }
 
         ///Returns the Node names and indices.
         public static Dictionary<string, int> GetNodes(string fileNameWithExtension)
